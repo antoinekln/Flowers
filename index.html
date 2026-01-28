@@ -2,125 +2,95 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pour ma Fleur Préférée ❤️</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+    <title>Fleur Magique</title>
     <style>
         body {
-            margin: 0;
-            overflow: hidden; /* Cache les pétales en dehors de l'écran */
-            background-color: #fce4ec; /* Rose très pâle */
-            font-family: 'Dancing Script', cursive; /* Police élégante */
-            color: #d81b60; /* Rose vif */
+            background-color: #1a1a1a;
+            height: 100vh;
             display: flex;
+            align-items: flex-end;
             justify-content: center;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .flower {
+            position: relative;
+            display: flex;
+            flex-direction: column;
             align-items: center;
-            min-height: 100vh;
-            position: relative;
+            margin-bottom: 50px;
         }
 
-        .message-container {
-            text-align: center;
-            background-color: rgba(255, 255, 255, 0.8); /* Fond blanc semi-transparent */
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-            position: relative;
-            z-index: 10; /* Pour s'assurer que le message est au-dessus des pétales */
+        /* La tige qui pousse */
+        .stem {
+            width: 8px;
+            height: 0;
+            background: linear-gradient(to top, #2d5a27, #4caf50);
+            border-radius: 4px;
+            animation: grow-stem 2s ease-out forwards;
         }
 
-        h1 {
-            font-size: 3.5em; /* Grande taille pour le titre */
-            margin-bottom: 20px;
-            color: #c2185b; /* Rose plus foncé */
+        /* Le coeur de la fleur */
+        .center {
+            width: 40px;
+            height: 40px;
+            background: #ffeb3b;
+            border-radius: 50%;
+            position: absolute;
+            top: -20px;
+            z-index: 10;
+            scale: 0;
+            animation: bloom 0.5s 2s ease-out forwards;
         }
 
-        p {
-            font-size: 1.8em;
-            line-height: 1.6;
-            margin-bottom: 30px;
-        }
-
-        .flower-emoji {
-            font-size: 4em;
-            animation: pulse 2s infinite alternate; /* Animation de battement */
-            display: inline-block;
-            margin-top: 20px;
-        }
-
-        /* Animation des pétales de fleur */
+        /* Les pétales */
         .petal {
             position: absolute;
-            background-color: #ff80ab; /* Rose pétale */
-            border-radius: 50%;
-            opacity: 0;
-            pointer-events: none; /* Les pétales ne bloquent pas le clic */
-            animation: fall linear infinite;
+            top: -40px;
+            width: 40px;
+            height: 70px;
+            background: #ff4081;
+            border-radius: 50% 50% 0 0;
+            transform-origin: bottom center;
+            scale: 0;
         }
 
-        /* Quelques variantes de couleur pour les pétales */
-        .petal:nth-child(2n) { background-color: #f48fb1; } /* Rose un peu plus foncé */
-        .petal:nth-child(3n) { background-color: #ffc1e3; } /* Rose plus clair */
-        .petal:nth-child(4n) { background-color: #f8bbd0; } /* Encore une nuance */
+        /* Animation de chaque pétale avec un délai */
+        .p1 { transform: rotate(0deg); animation: bloom 0.8s 2.2s ease-out forwards; }
+        .p2 { transform: rotate(45deg); animation: bloom 0.8s 2.4s ease-out forwards; }
+        .p3 { transform: rotate(90deg); animation: bloom 0.8s 2.6s ease-out forwards; }
+        .p4 { transform: rotate(135deg); animation: bloom 0.8s 2.8s ease-out forwards; }
+        .p5 { transform: rotate(180deg); animation: bloom 0.8s 3.0s ease-out forwards; }
+        .p6 { transform: rotate(225deg); animation: bloom 0.8s 3.2s ease-out forwards; }
+        .p7 { transform: rotate(270deg); animation: bloom 0.8s 3.4s ease-out forwards; }
+        .p8 { transform: rotate(315deg); animation: bloom 0.8s 3.6s ease-out forwards; }
 
-        @keyframes fall {
-            0% {
-                transform: translate3d(0, -10vh, 0) rotate(0deg);
-                opacity: 0;
-            }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% {
-                transform: translate3d(0, 105vh, 0) rotate(720deg);
-                opacity: 0;
-            }
+        @keyframes grow-stem {
+            from { height: 0; }
+            to { height: 300px; }
         }
 
-        @keyframes pulse {
-            from { transform: scale(1); }
-            to { transform: scale(1.1); }
+        @keyframes bloom {
+            from { scale: 0; }
+            to { scale: 1; }
         }
     </style>
 </head>
 <body>
 
-    <script>
-        const body = document.body;
-        const numPetals = 30; // Nombre de pétales à afficher
+    <div class="flower">
+        <div class="center"></div>
+        <div class="petal p1"></div>
+        <div class="petal p2"></div>
+        <div class="petal p3"></div>
+        <div class="petal p4"></div>
+        <div class="petal p5"></div>
+        <div class="petal p6"></div>
+        <div class="petal p7"></div>
+        <div class="petal p8"></div>
+        <div class="stem"></div>
+    </div>
 
-        for (let i = 0; i < numPetals; i++) {
-            createPetal();
-        }
-
-        function createPetal() {
-            const petal = document.createElement('div');
-            petal.classList.add('petal');
-            
-            // Taille aléatoire
-            const size = Math.random() * 15 + 10; // Entre 10px et 25px
-            petal.style.width = `${size}px`;
-            petal.style.height = `${size}px`;
-
-            // Position de départ aléatoire en haut de l'écran
-            petal.style.left = `${Math.random() * 100}vw`;
-            
-            // Durée et délai d'animation aléatoires
-            const duration = Math.random() * 10 + 5; // Entre 5s et 15s
-            const delay = Math.random() * 8; // Jusqu'à 8s de délai
-            petal.style.animationDuration = `${duration}s`;
-            petal.style.animationDelay = `${delay}s`;
-
-            // Rotation initiale aléatoire
-            petal.style.transform = `rotate(${Math.random() * 360}deg)`;
-
-            body.appendChild(petal);
-
-            // Supprime le pétale après son animation pour éviter d'en accumuler trop
-            petal.addEventListener('animationend', () => {
-                petal.remove();
-                createPetal(); // Crée un nouveau pétale pour maintenir le flux
-            });
-        }
-    </script>
 </body>
 </html>
