@@ -1,126 +1,183 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pour ma Fleur Préférée ❤️</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            margin: 0;
-            overflow: hidden; /* Cache les pétales en dehors de l'écran */
-            background-color: #fce4ec; /* Rose très pâle */
-            font-family: 'Dancing Script', cursive; /* Police élégante */
-            color: #d81b60; /* Rose vif */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            position: relative;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Veux-tu être ma Valentine ?</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Pangolin&display=swap');
 
-        .message-container {
-            text-align: center;
-            background-color: rgba(255, 255, 255, 0.8); /* Fond blanc semi-transparent */
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-            position: relative;
-            z-index: 10; /* Pour s'assurer que le message est au-dessus des pétales */
-        }
+html, body {
+    font-family: 'Pangolin', cursive;
+    background-color: #ffe5ec;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
 
-        h1 {
-            font-size: 3.5em; /* Grande taille pour le titre */
-            margin-bottom: 20px;
-            color: #c2185b; /* Rose plus foncé */
-        }
+.container {
+    text-align: center;
+    background: white;
+    padding: 2rem;
+    border-radius: 30px;
+    box-shadow: 0 10px 25px rgba(255, 75, 110, 0.2);
+    max-width: 90%;
+    transition: all 0.3s ease;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
-        p {
-            font-size: 1.8em;
-            line-height: 1.6;
-            margin-bottom: 30px;
-        }
+button {
+    transition: transform 0.2s, top 0.2s, left 0.2s;
+    cursor: pointer;
+}
 
-        .flower-emoji {
-            font-size: 4em;
-            animation: pulse 2s infinite alternate; /* Animation de battement */
-            display: inline-block;
-            margin-top: 20px;
-        }
+#yesBtn {
+    background-color: #ff4d6d;
+    color: white;
+    position: relative;
+    z-index: 2;
+}
 
-        /* Animation des pétales de fleur */
-        .petal {
-            position: absolute;
-            background-color: #ff80ab; /* Rose pétale */
-            border-radius: 50%;
-            opacity: 0;
-            pointer-events: none; /* Les pétales ne bloquent pas le clic */
-            animation: fall linear infinite;
-        }
+#noBtn {
+    background-color: #bdbdbd;
+    color: white;
+    position: fixed; /* bouge librement */
+    top: 20%;
+    left: 80%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+}
 
-        /* Quelques variantes de couleur pour les pétales */
-        .petal:nth-child(2n) { background-color: #f48fb1; } /* Rose un peu plus foncé */
-        .petal:nth-child(3n) { background-color: #ffc1e3; } /* Rose plus clair */
-        .petal:nth-child(4n) { background-color: #f8bbd0; } /* Encore une nuance */
+#finalMessage {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: #ff4d6d;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 2rem;
+    z-index: 1000;
+}
 
-        @keyframes fall {
-            0% {
-                transform: translate3d(0, -10vh, 0) rotate(0deg);
-                opacity: 0;
-            }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% {
-                transform: translate3d(0, 105vh, 0) rotate(720deg);
-                opacity: 0;
-            }
-        }
+#mainGif {
+    border-radius: 20px;
+    max-height: 200px;
+    margin-bottom: 20px;
+}
 
-        @keyframes pulse {
-            from { transform: scale(1); }
-            to { transform: scale(1.1); }
-        }
-    </style>
+#kissGif {
+    max-width: 300px;
+    border-radius: 20px;
+}
+</style>
 </head>
 <body>
 
-    <script>
-        const body = document.body;
-        const numPetals = 30; // Nombre de pétales à afficher
+<div class="container" id="mainContainer">
 
-        for (let i = 0; i < numPetals; i++) {
-            createPetal();
-        }
+    <!-- GIF principal -->
+    <img id="mainGif" 
+         src="https://media1.tenor.com/m/pjBtpAFSnmgAAAAd/peach-goma-peach-and-goma.gif" 
+         class="mx-auto mb-4">
 
-        function createPetal() {
-            const petal = document.createElement('div');
-            petal.classList.add('petal');
-            
-            // Taille aléatoire
-            const size = Math.random() * 15 + 10; // Entre 10px et 25px
-            petal.style.width = `${size}px`;
-            petal.style.height = `${size}px`;
+    <h1 id="question" class="text-3xl font-bold mb-8 text-[#ff4d6d]">Veux-tu être ma Valentine ?</h1>
 
-            // Position de départ aléatoire en haut de l'écran
-            petal.style.left = `${Math.random() * 100}vw`;
-            
-            // Durée et délai d'animation aléatoires
-            const duration = Math.random() * 10 + 5; // Entre 5s et 15s
-            const delay = Math.random() * 8; // Jusqu'à 8s de délai
-            petal.style.animationDuration = `${duration}s`;
-            petal.style.animationDelay = `${delay}s`;
+    <div class="flex justify-center items-center gap-4 relative" id="btnWrapper">
+        <button id="yesBtn" class="px-8 py-3 rounded-full font-bold text-xl shadow-lg">
+            Oui
+        </button>
+    </div>
+</div>
 
-            // Rotation initiale aléatoire
-            petal.style.transform = `rotate(${Math.random() * 360}deg)`;
+<!-- Bouton Non en dehors du container -->
+<button id="noBtn" class="px-6 py-2 rounded-full font-bold text-lg shadow-lg">Non</button>
 
-            body.appendChild(petal);
+<!-- Message final -->
+<div id="finalMessage" style="display:none;">
+    <img id="kissGif" 
+         src="https://media1.tenor.com/m/47JhmZOqxm8AAAAd/dudu-bubu-dudu-kiss-bubu-crashing-to-the-walls.gif" 
+         class="mb-6">
+    <h1 class="text-5xl font-bold">YAY ! Hâte de te voir ❤️</h1>
+</div>
 
-            // Supprime le pétale après son animation pour éviter d'en accumuler trop
-            petal.addEventListener('animationend', () => {
-                petal.remove();
-                createPetal(); // Crée un nouveau pétale pour maintenir le flux
-            });
-        }
-    </script>
+<script>
+const yesBtn = document.getElementById('yesBtn');
+const noBtn = document.getElementById('noBtn');
+const finalMessage = document.getElementById('finalMessage');
+
+let noCount = 0;
+const phrases = [
+    "Tu es sûre ?",
+    "Et si je demandais très gentiment ?",
+    "S'il te plait mon amour...",
+    "Avec un gâteau au chocolat par dessus ?",
+    "Et avec un matcha frappé ?",
+    "S'IL TE PLAÎT POOKIE",
+    "Mais... :*(",
+    "Je vais mourir là...",
+    "Ça y est, je suis mort.",
+    "Ok, tu parles au fantôme d'Antoine là.",
+    "S'il te plait bébé",
+    ":((((",
+    "Je ne m'arrêterai pas !",
+    "Regarde la taille du bouton OUI maintenant..."
+];
+
+// Précharger les images
+["https://media1.tenor.com/m/pjBtpAFSnmgAAAAd/peach-goma-peach-and-goma.gif",
+ "https://media1.tenor.com/m/47JhmZOqxm8AAAAd/dudu-bubu-dudu-kiss-bubu-crashing-to-the-walls.gif"].forEach(src => {
+    const img = new Image();
+    img.src = src;
+});
+
+noBtn.addEventListener('click', () => {
+    noCount++;
+
+    if (noCount <= phrases.length) {
+        noBtn.innerText = phrases[noCount - 1];
+    } else {
+        noBtn.innerText = "Bon, t'as plus le choix.";
+    }
+
+    // Agrandir le Oui
+    const scale = 1 + noCount * 0.4;
+    yesBtn.style.transform = `scale(${scale})`;
+
+    // Rétrécir le Non
+    const shrink = Math.max(0.3, 1 - noCount*0.05);
+    noBtn.style.transform = `scale(${shrink})`;
+
+    // Position aléatoire en haut (0 à 50%)
+    const maxX = window.innerWidth - noBtn.offsetWidth;
+    const maxY = window.innerHeight / 2 - noBtn.offsetHeight;
+    const x = Math.random() * maxX;
+    const y = Math.random() * maxY;
+    noBtn.style.left = `${x}px`;
+    noBtn.style.top = `${y}px`;
+
+    // Disparaît seulement à la toute fin
+    if(noCount > 15) {
+        noBtn.style.display = 'none';
+    }
+});
+
+yesBtn.addEventListener('click', () => {
+    finalMessage.style.display = 'flex';
+});
+</script>
+
 </body>
 </html>
